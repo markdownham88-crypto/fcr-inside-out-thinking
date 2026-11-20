@@ -914,6 +914,16 @@ details.case[open]{border-color:var(--brass)}
 @media (max-width:820px){.gmore{grid-template-columns:1fr}}
 .gmore dl{margin:0 0 10px;font-size:14.5px;line-height:1.5}.gmore dt{color:var(--bone);font-weight:600;margin-top:6px}.gmore dd{margin:2px 0 0;color:var(--text)}
 .gmore ul,.gmore ol{margin:4px 0 10px;padding-left:20px;font-size:14.5px;line-height:1.55}.gmore li{margin:3px 0}
+/* deeper walkthroughs */
+.tmore{margin:8px 0 4px;border-left:2px solid #7FB3E0;padding-left:10px}
+.tmb{all:unset;cursor:pointer;font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7FB3E0}
+.tmore p{display:none;margin:6px 0 0;font-size:14px;color:var(--text);line-height:1.55}.tmore.open p{display:block}
+.tdots{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 2px}
+.tdot{all:unset;cursor:pointer;width:10px;height:10px;border-radius:50%;border:1px solid var(--brass);background:transparent}
+.tdot.past{background:rgba(210,174,99,.45)}.tdot.on{background:var(--brass);transform:scale(1.3)}
+.tdeep{display:flex;gap:6px;align-items:center;margin-top:8px;font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.tfaq .tq{border-bottom:1px solid rgba(42,66,98,.5);padding:6px 0}.tfaq summary{cursor:pointer;color:var(--bone);font-size:15px}
+.tfaq .tq p{margin:6px 0 4px;font-size:14.5px;line-height:1.55}.tqm{font-size:13.5px;color:var(--muted);margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -2716,6 +2726,231 @@ how:{see:[["Nodes","Parties, coloured by group, sized by ties."],["Dashed ring",
  team:["Who have we not yet spoken to?"]},
  ch:[["Run a story for ten days.",/day 10 of 10/i,"Load an example and Run the story."],["Find a broker.",/\(the broker\)/i,"Load the office block."]]}};
 
+/* ================= DATA 14: deeper walkthroughs and questions for every instrument ================= */
+/* steps: [target, title, text, act, more] — 'more' is the Go deeper explanation. faq: [[question, answer]] */
+var DEEP={
+apSvg:{steps:[
+["p:255,240","You, at the centre","The gold circle is you, the receiver. Every line runs from you to one of ten parties.",null,"Putting the receiver at the centre is not a claim of importance. It is where the receiver experiences the appointment from: every relationship is one you are in, and every one changes as you act."],
+["p:330,62","The lender’s side","Purple rings: the relationship manager and the credit committee.",null,"They appointed you and you owe them your primary duty. Their regard moves with confidence: promises kept or broken, valuations that hold or fail."],
+["p:96,84","The established occupiers","Orange rings: the director, the café owner and the other shops.",null,"These have been on the parade longest and talk to each other most. The director starts at −7: the story that receivers are vultures is already in circulation."],
+["p:128,408","The outsiders","Blue rings: residents, agent, valuer, council officer and a local investor.",null,"Looser ties, less standing. Some of them matter more than they appear: the council can fund works; the investor can change the exit."],
+["p:96,84","Reading the numbers","Each circle’s number is how that party regards you, from −10 to +10. Thick lines mean strong feeling; dashed lines mean hostility.",null,"Watch for movement more than level. A party moving from −7 to −3 is a bigger event than one sitting at +2."],
+["p:615,62","Rent and value","The first two gauges: rent collected and exit value. Both should rise.",null,"These are what the lender’s template measures. They respond to both outside-in and inside-out choices, but differently over time."],
+["p:615,182","Shared understanding","The third gauge: how much the parties understand the situation together.",null,"It rises when you ask, listen and bring people into the room. It is the gauge that makes later decisions easier."],
+["p:615,242","Two gauges that should fall","Uncertainty pushed onto tenants, and your own drift from where you started.",null,"They are the hidden costs of a smooth-looking appointment: who carries the risk, and what you have quietly agreed to leave out."],
+["p:615,362","Lender confidence","Watch this gauge across the whole run.",null,"Outside-in choices raise it early because they relieve anxiety. Some of them come back later, as the debrief chart shows."],
+["p:615,434","The timeline","Thirteen decisions from day 1 to day 80. Your choices appear as A, B or C.",null,"The letters are hidden while you choose. A is usually the textbook move, B the inside-out move, C something else; the debrief explains each."],
+["c:Begin day 1","Begin","Press Begin day 1.","do","The first decision is the appointment call. There is no right answer, only consequences, some immediate and some later."],
+["panel","Choosing","Read the situation, choose an option, then read what happened.",null,"After each choice the panel lists which gauges moved and whose regard changed, and tells you if the choice will be remembered. A ‘Meanwhile’ box on a later decision is where it comes back."],
+["hist","Comparing runs","Each finished run is saved here, with its gauges.",null,"Run the Textbook and Inside-out presets after your own run and compare lender confidence, harm and drift. Then open the debrief for any run."]],
+faq:[["Why did lender confidence fall late on?","Something you chose earlier came back: a timetable, a valuation, voids, or a promise of control. Look at the ‘Meanwhile’ boxes and the debrief chart."],["Is option B always right?","No. B is usually the inside-out move, but the letter must still go and arrears must still be recovered. The point is to see consequences, not to find a formula."],["Why doesn’t the director warm up?","His grievance is real and his posture is settled. Hearing him on day 3 stops him getting worse; nothing in a hundred days fully converts him."],["Can I see what each choice did?","Yes: click any party to see when their regard moved, and open the full debrief at day 100."]]},
+stanceSvg:{steps:[
+["p:130,20","Which stance you are seeing","The label at top left names the stance on screen.",null,"Both stances show the same eleven parties. Only the arrangement changes, which is the point: the stance decides what you can see."],
+["p:380,235","Outside-in: a chart","The parties sit in a hierarchy: lender, then receiver, then agent, then the occupiers.",null,"This is how a workout template, a report or a fee agreement sees the appointment: lines of authority and reporting."],
+["c:Turn it inside out","Turn it","Press Turn it inside out.","do","Watch the parties move. The ones that move furthest are the ones the chart places least accurately."],
+["p:380,235","Inside-out: a web","Now the same parties are placed by who talks to whom.",null,"The café owner moves towards the centre; the credit committee, so important on the chart, sits at the edge of the conversations."],
+["p:380,235","The threads","Each line is a conversation the chart had no box for.",null,"The 2019 approval, the director’s grievance, the WhatsApp group, the agent’s fee: these are what decide the appointment."],
+["p:380,235","Click a party","Click any party.",null,"The panel sets the outside-in reading beside the inside-out reading for that party, and lists the conversations they are in."],
+["panel","Reading both","Use the panel to compare the two readings of one party.",null,"Neither reading is false. The skill is knowing which one is speaking when you make a decision."],
+["c:Outside-in","Turn it back","Return to outside-in and notice what disappears.",null,"The conversations vanish from view, but not from the appointment."]],
+faq:[["Is the inside-out view the right one?","Both are partial. The chart is needed for authority, duty and reporting; the web for understanding what people will do."],["Why does the café owner matter so much?","She is the hub of the established group: stories about you travel through her."]]},
+mapSvg:{steps:[
+["p:380,66","The whole","The labelled frame is ‘the appointment’ treated as a single whole.",null,"Kant would call this a regulative idea: useful for thinking, not a thing you can find on the forecourt."],
+["p:380,96","The grid","Four strategies: hold and let, hold and refurbish, sell tenanted, sell vacant.",null,"Most workout papers start with a choice like this. It looks complete, and it already leaves out most of what will happen."],
+["p:164,430","The dots","The moving dots are what is actually happening on the parade.",null,"They refuse to stay inside the boxes. That is the gap between the map and the territory."],
+["p:658,86","Elaboration","The left meter shows how elaborate the map has become.",null,"Every step of elaboration is sensible on its own: a boundary, openness to the environment, nesting, feedback, critique."],
+["p:718,86","Grip","The right meter shows how well the map still tracks the dots.",null,"Grip falls as elaboration rises. The map gets better as a map and worse as a guide to the parade."],
+["c:▶ Elaborate the map","Elaborate","Play the seven steps.","do","Pause on each step and compare it with your own last strategy paper."],
+["p:297,131","Voices","Speech bubbles appear: ‘Who drew this?’, ‘We’re not a box.’",null,"These are the people the map describes, answering back. In outside-in work they are usually heard last."],
+["panel","Each step","The panel names each step and gives both meters as percentages.",null,"Use the step names to diagnose your own papers: which step are they on, and when did they last change because of a conversation?"]],
+faq:[["Are maps useless, then?","No. The lesson is that elaborating a map is not the same as understanding, and can replace it."],["Why does grip keep falling?","Each layer adds assumptions about the parade without adding contact with it."]]},
+parSvg:{steps:[
+["p:180,8","Before you","The threads began in 2019, when the loan was written.",null,"Each horizontal thread is a conversation already running: lender, borrower, agent, shops, residents, WhatsApp, buyers, valuer."],
+["p:82,40","Eight parties","The left column names each thread.",null,"Some threads are loud and some are quiet. Quiet ones are not unimportant; they are often where the hidden transcript lives."],
+["p:420,8","You arrive","The vertical line is your arrival: late, into eight conversations.",null,"Burke’s parlour: nobody stops to brief you, and nobody could give a full account if they tried."],
+["p:420,330","Your standing","Bars along the bottom show your standing with each party.",null,"They start level. Every move you make shifts them, some up and some down. There is no move that lifts all eight."],
+["c:Begin week 1","Begin","Begin week 1.","do","You will meet six moments over six weeks."],
+["panel","Speak, ask or stay silent","Each moment offers three moves.",null,"Speaking takes a side; asking signals curiosity and still takes a position; silence is read by others, usually against you."],
+["panel","Reading the response","After each move, the panel shows how each party read it.",null,"Notice that the same move warms one party and cools another. That is what ‘no neutral move’ means."],
+["c:Preset: always silent","Try the presets","Run Always silent, then Ask, then speak, and compare.",null,"Silence ends worst (−13). Asking first and speaking later ends best (+9): catch the drift, then put in your oar."],
+["hist","Compare","Each run’s net standing is saved below.",null,"Play twice, changing only week one, to see how far an early move carries."]],
+faq:[["Why is silence so costly?","Because others decide what it means. In a hostile parade, silence reads as confirmation of the worst story."],["Can I win everyone over?","No. Any move favours someone. The aim is to move knowingly."]]},
+gesSvg:{steps:[
+["p:380,236","The gesture","Your gesture sits at the centre.",null,"Mead: a gesture’s meaning is completed by the response it calls out. You control the gesture, not its meaning."],
+["p:380,37","Twelve people","Around it, twelve people on and near the parade.",null,"Each has a history: the café owner’s loyalty to the director, the subtenant’s secret, the young family’s housing payment."],
+["c:Statutory notice letter","The letter","Send the statutory letter.","do","Watch the lines reach out and the circles colour."],
+["p:380,433","Colours","Green warm, orange cold, grey unmoved.",null,"The letter warms one person and chills five. It is legally necessary and relationally weak."],
+["p:230,410","Click a person","Click the young family in Flat 5.",null,"The panel shows how they read each of the four gestures. Their housing payment fails when the demand goes to a new account."],
+["c:Door-to-door visit","The visit","Now try the door-to-door visit.",null,"Eight warm: the most warming single gesture. It still chills the subtenant and the director."],
+["c:Compare all four","Compare","Compare all four gestures.",null,"Read across each row. Nobody is warm to everything: plan for the people each gesture misses."],
+["c:Letter → visit → WhatsApp","Sequences","Try a sequence.",null,"Order matters. The letter, then a visit, then a message reaches everyone; the letter then the demand reaches almost no one."],
+["panel","Who was reached by what","The panel lists the first gesture that warmed each person.",null,"Use this to plan a first week: the gesture that reaches each group, in the right order."]],
+faq:[["Why does the demand chill people?","It changes how they pay before they know who you are. After a visit, it reads as routine."],["Should I skip the letter?","No. It is legally required. Add gestures around it."]]},
+figSvg:{steps:[
+["p:380,240","The figuration","Eleven parties joined by dependence.",null,"Elias: a figuration is people bound by needing each other. Power is a balance, not a possession."],
+["c:Raise shop rents","A lever","Pull the rent lever.","do","Watch who moves, and which way."],
+["p:380,240","Movement","Parties drift towards or away from you.",null,"Some move as intended; others move the opposite way. The rent rise confirms the director’s story to the café."],
+["panel","Intended and unintended","The panel separates the two.",null,"The bigger the intended effect, the bigger the unintended ones tend to be."],
+["c:Hold a tenants’ meeting","Listening","Now hold a tenants’ meeting.",null,"No financial effect expected, and more parties move the right way than with any other lever."],
+["c:Compare all four","Compare","Compare all four levers.",null,"Count the right-way and wrong-way movements for each."],
+["c:Shake the figuration","A shock","Shake it.",null,"It re-forms, roughly where it was: figurations are stable patterns."],
+["p:380,240","Drag yourself","Drag the receiver node and let go.",null,"The others follow; then you are pulled back. Forming and being formed."]],
+faq:[["Why do levers backfire?","Because each party responds to the others as well as to you."],["Does this mean I can’t act?","No. It means test moves in one conversation first and watch the responses."]]},
+outSvg:{steps:[
+["p:192,22","The established","Left: the long-standing occupiers.",null,"Tightly tied, with a shared history. Elias and Scotson: their power comes from cohesion."],
+["p:603,22","The outsiders","Right: newer and loosely tied. You are among them.",null,"Warmth among the outsiders rarely reaches the established group."],
+["p:120,90","The director","The source of the hostile story.",null,"He is anchored at −9: he will not change much. What matters is whether his story spreads."],
+["p:210,170","The hub","The café owner.",null,"She has the most ties in the established group. Stories travel through her."],
+["p:295,449","Numbers","Each number is what that person now says about you.",null,"Red: repeating the director’s story. Green: telling another one."],
+["#outC","Cohesion","The slider sets how tightly knit the established group is.",null,"High cohesion makes the group hard to reach from outside and easy to move from within."],
+["c:Stay in the office","Letters only","Choose Stay in the office.","do","Ten days of letters: watch the red spread."],
+["c:Start with the café owner","The hub","Now start with the café owner.",null,"Warmth enters the established group through its own ties."],
+["c:Hub, light and director together","Three small moves","Try three moves together.",null,"The established group itself retells a different story."],
+["hist","Compare","Compare runs in the history.",null,"Try the same first move at cohesion 30 and 100."]],
+faq:[["Why doesn’t visiting the outsiders help?","They have few ties to the established group and little standing to carry your story."],["Should I meet the director first?","It cools his story; it does not convert him. Combine it with the hub."]]},
+locSvg:{steps:[
+["p:111,36","The site meeting","The innermost scale.",null,"Where the pattern is first seen: the agent blaming the contractor."],
+["p:154,78","The parade","One scale out.",null,"The same pattern among the occupiers."],
+["p:274,120","The portfolio","The receiver’s appointments.",null,"The same pattern across the receiver’s work."],
+["p:310,162","The lender’s book","Further out.",null,"The lender’s handling of its receivers."],
+["p:408,204","The market","The outermost scale.",null,"The pattern in the property credit market."],
+["c:Blame moves downwards","Choose a pattern","Choose Blame moves downwards.","do","One pattern, followed outward."],
+["c:▶ Zoom out","Zoom out","Zoom out one scale at a time.",null,"Read each example against the one below it."],
+["panel","Is it the same?","Ask whether it really is the same pattern.",null,"This is an argument, not a proof: Mills’s question, what is this a case of?"]],
+faq:[["Is this proof that patterns repeat?","No. It is a way of asking better questions."],["How do I use it?","Take one surprise from your appointment and ask what it is a case of."]]},
+pxSvg:{steps:[
+["p:165,215","The web","Shape on the left: distance from holding each tension.",null,"Small and even: tensions held. Large or lopsided: leaning to poles."],
+["p:446,42","Forming and being formed","The first paradox.",null,"You shape the appointment as it shapes you."],
+["p:438,104","In charge, not in control","The second.",null,"Formal authority; outcomes nobody controls."],
+["p:454,166","Detachment and involvement","The third.",null,"Elias: close enough to care, far enough to see."],
+["p:428,228","Stability and change","The fourth.",null,"Steady enough to be trusted; open enough to re-aim."],
+["p:438,290","Local and global","The fifth.",null,"Stay with the particular; ask what it is a case of."],
+["p:435,352","Speaking and listening","The sixth.",null,"Burke’s parlour again."],
+["p:560,60","Drag","Drag a handle, or use the arrow keys.",null,"Red ends name the failure at that pole."],
+["c:Preset: The textbook receiver","A failure type","Load the textbook receiver.","do","Then the facilitator who never decides: they fail on opposite sides."],
+["panel","The readings","The panel names each pole’s failure and the post behind it.",null,"Set the sliders for your own last month."]],
+faq:[["Is the middle a compromise?","No. Holding keeps both poles in play."],["Can all six be held?","Yes, and it is harder than it looks."]]},
+cabSvg:{steps:[
+["p:202,36","The chain","Top: a valuation as a chain.",null,"Each link depends on the last."],
+["p:505,90","The weak link","Vacant possession assumed.",null,"If this link fails, the whole value fails: three units are let."],
+["p:147,206","The cable","Below: your cable.",null,"Peirce: many slender fibres, intimately connected."],
+["c:Café owner","Fibres","Click accounts to add them.",null,"Each account is a fibre. Different groups make different fibres."],
+["c:Preset: one group","One group","Load one group.","do","Four tenants: the cable gives way, because they share blind spots."],
+["c:Preset: nine voices","Nine voices","Now nine voices from seven groups.",null,"It holds where the chain fails."],
+["panel","The verdict","The panel reports chain and cable.",null,"Foulkes: more than eight voices bring enough variety to generalise."],
+["hist","Compare","Compare runs.",null,"Find the fewest accounts that still hold at 80."]],
+faq:[["Does this replace a valuation?","No. It tests one."],["Why does variety matter more than number?","Accounts from one group fail together."]]},
+assSvg:{steps:[
+["p:400,74","The agenda","Six items of an ordinary case meeting.",null,"An agenda is the organiser’s map of what should matter."],
+["p:680,250","The line","Above: said. Below: present but unsaid.",null,"The themes below the line shape the meeting anyway."],
+["p:390,396","Time","Sixty minutes.",null,"Free association starts slowly."],
+["c:Agenda","Agenda","Choose Agenda and run it.",null,"Everything on time; nothing that decides the appointment said."],
+["c:Free association","Free association","Choose Free association.","do","Then run it."],
+["c:▶ Run the meeting","Run","Run the meeting.",null,"Watch themes rise: fear of blame, the director’s grief, the agent’s fear, your own wish to be liked."],
+["panel","What surfaced","The panel lists them as they surface.",null,"Notice the last one is yours."]],
+faq:[["Is this therapy?","No. It is inquiry into the work."],["Do I drop the agenda?","No. Leave time after it."]]},
+trSvg:{steps:[
+["p:139,18","In the room","The public transcript.",null,"What six people say with power present."],
+["p:135,210","Afterwards","The hidden transcript.",null,"What they say among trusted peers."],
+["p:63,405","Six people","Each column is one person.",null,"Read down each column: the gap between what they say and what they mean."],
+["#trR","Bring it in","Slide right.","do","Lines rise into the room one by one."],
+["panel","The cost","The social cost rises.",null,"Scott: the first to speak takes the biggest risk."],
+["c:Preset: two allies speak","Allies","Try two allies.",null,"Shared risk is easier to bear."],
+["c:1 · Unthinkable","Fleck","Step through Fleck’s stages.",null,"How a thought collective resists a new idea."]],
+faq:[["Should everything be said?","Not necessarily; but nothing important should be only in the car park."],["What is a thought collective?","A group with a shared style of thinking."]]},
+unSvg:{steps:[
+["p:65,60","The top","The credit committee.",null,"Most capacity; can pass uncertainty down."],
+["p:79,340","The bottom","Tenants and residents.",null,"Least capacity; cannot pass it on."],
+["p:420,200","Bars","What each level holds.",null,"Green holding, gold stretched, red overloaded."],
+["p:420,390","Capacity marks","Dashed marks: what each level can bear.",null,"A bar past its mark is overloaded."],
+["#unS","Slack","Slide slack.",null,"Moves capacity marks right."],
+["#unR","Absorbing","Slide how much the receiver absorbs.","do","Watch the load shift up to you."],
+["c:Preset: Lean appointment","Lean","Load lean.",null,"Tenants overloaded."],
+["c:Preset: Receiver absorbs","Absorb","Load receiver absorbs.",null,"You become the overloaded level."],
+["c:⚡ A shock arrives","Shock","Drop a shock.",null,"It lands where there is least room."]],
+faq:[["Is absorbing always good?","Within capacity, yes; beyond it you become the point of failure."],["What is slack?","Spare capacity: contingency, time, people."]]},
+kpSvg:{steps:[
+["p:128,26","The dashboard","Four indicators the lender sees.",null,"Rent collected, days to exit, cost ratio, reports on time."],
+["p:530,26","Behind it","Five relational qualities.",null,"Tenants’ trust, honesty of reports, the agent’s judgement, residents’ safety, buyers’ confidence."],
+["#kpR","Pressure","Set target pressure.","do","How hard the indicators are pressed."],
+["c:▶ Run twelve months","Run","Run a year.",null,"Watch the bars diverge."],
+["c:Preset: hard targets","Hard targets","Load hard targets.",null,"Dashboard 91%, relationships 25%."],
+["c:Preset: good enough","Good enough","Load good enough.",null,"The bars close together."],
+["panel","Averages","The panel compares them.",null,"Performativity: measures produce performances."]],
+faq:[["Should we drop KPIs?","No targets has its own cost; the lender needs to see something."],["What does good enough mean?","A judged, provisional standard."]]},
+soSvg:{steps:[
+["p:57,200","The problem","Arrears at 31%.",null,"A presenting problem."],
+["p:160,28","Fix 1","The first fix.",null,"It solves something."],
+["p:315,28","Fix 2","The next generation.",null,"It solves the problem the first fix created."],
+["p:625,28","Fix 4","The fourth generation.",null,"Read the severity."],
+["c:Press hard for arrears","Press hard","Grow this chain.","do","Severity rises to five."],
+["c:Ask what the arrears are","Reflect","Grow the reflective chain.",null,"Severity falls."],
+["c:Compare all four","Compare","Compare all four.",null,"Jaeggi: progress is moving away from problems."]],
+faq:[["What is a second-order problem?","One produced by an earlier solution."],["Does reflecting solve everything?","No; it leaves smaller, ordinary problems."]]},
+actSvg:{steps:[
+["p:270,180","The situation","The white circle.",null,"It moves weekly and jumps at events."],
+["p:67,349","Rush in","Orange.",null,"Fast to where the problem was."],
+["p:248,349","Wait","Grey.",null,"Barely moves."],
+["p:413,349","Act and reflect","Green.",null,"Steady, re-aiming fortnightly."],
+["p:634,150","Gap","Right: distance over time.",null,"Lower is better."],
+["#acS","Speed","Your speed.",null,"How fast you act."],
+["#acR","Reflect","How often you re-aim.","do","Then play."],
+["c:▶ Play twenty weeks","Play","Play twenty weeks.",null,"Read your average gap."]],
+faq:[["Is faster better?","Only if you re-aim."],["Is reflecting more better?","Not without moving."]]},
+healSvg:{steps:[
+["p:196,18","Eight moments","The first two months.",null,"Each a chance to heal or reveal."],
+["p:601,53","Anxiety","Red.",null,"Falls when you heal."],
+["p:633,87","Dependency","Purple.",null,"Rises when you heal."],
+["p:643,121","Insight","Green.",null,"Rises when you reveal."],
+["p:620,155","Blind spot","Gold.",null,"Your unexamined assumptions."],
+["c:Begin the meetings","Begin","Begin.","do","Choose at each moment."],
+["c:Preset: Medio-passive","Medio-passive","Compare presets.",null,"Reveal, but contain when anxiety is high."]],
+faq:[["Is healing wrong?","Not always; sometimes containment comes first."],["What is a revealer?","An adviser who gives the problem back."]]},
+drSvg:{steps:[
+["p:113,16","Ten moments","Ten weeks.",null,"Small compromises."],
+["p:650,51","Drift","Red.",null,"Distance from where you started."],
+["p:632,81","Cost of speaking","Gold.",null,"Rises with each go-along."],
+["p:611,111","Noticing","Green.",null,"Falls with drift."],
+["p:290,322","Markers","Your choices.",null,"Faint means no longer noticed."],
+["c:Begin week 1","Begin","Begin.","do","Choose each week."],
+["c:Preset: Speak early","Speak early","Try speaking early.",null,"It doesn’t bank courage."]],
+faq:[["What is drift?","Gradual change through small steps."],["How do I avoid it?","Speak on small things while you still notice."]]},
+noSvg:{steps:[
+["p:500,95","Meetings","Ten columns.",null,"The first ten meetings."],
+["p:185,127","Your pattern","‘You spoke first’.",null,"One of two rows that are yours."],
+["p:147,297","Your other pattern","‘You agreed to keep the peace’.",null,"The second."],
+["p:500,240","Mark","Click cells.",null,"Where you think each pattern occurred."],
+["c:Reveal the record","Reveal","Reveal.","do","Compare with your marks."],
+["c:Preset: mark only other people","Others only","Try this preset.",null,"You miss your own patterns."]],
+faq:[["Why do I miss my own?","We see others’ patterns; others see ours."],["Is it a memory test?","No; it is a reflexivity test."]]},
+fiSvg:{steps:[
+["p:245,58","Interests","Top axis.",null,"Whose purposes the tool serves."],
+["p:437,225","Ideology","Right axis.",null,"The world-view it presents as natural."],
+["p:245,396","Identity","Bottom axis.",null,"What it does to who we are."],
+["p:38,225","Institutions","Left axis.",null,"What it reshapes."],
+["c:Lender’s workout template","A tool","Choose a tool.","do","Read the four answers."],
+["c:Estuarine map (Cynefin)","Compare","Overlay another.",null,"Compare shapes."],
+["#fiS0","Your own","Rate your own tool.",null,"Use the sliders."]],
+faq:[["Are high scores bad?","No; they mean the tool shapes a lot."],["Where do the questions come from?","Mowles’s day on AI and management."]]},
+ioSvg:{steps:[
+["p:385,194","Days","0 to 100.",null,"The first hundred days."],
+["p:50,141","Move 1","Arrive late, on purpose.",null,"Find the argument."],
+["p:720,141","Move 12","The last move.",null,"No thing to be delivered."],
+["c:▶ Run the hundred","Run","Run.","do","Each move links to its instrument."],
+["panel","Each move","Do, and by the end of it.",null,"A practice, not a protocol."]],
+faq:[["Must I follow the order?","No; they are habits."],["Where do the moves come from?","From the instruments in this treatise."]]},
+wbSvg:{steps:[
+["p:380,236","Canvas","Your appointment.",null,"Start empty or with an example."],
+["c:Load: The parade","Example","Load the parade.","do","Twelve parties, fourteen ties."],
+["p:380,236","Rings","Dashed rings mark each group’s hub.",null,"Most ties in the group."],
+["p:380,236","Broker","The gold BROKER tag.",null,"Sits between groups."],
+["#wbName","Add","Add a party.",null,"Name, group, Add party."],
+["p:380,236","Tie","Click two parties.",null,"Tie or untie."],
+["c:Run the story","Story","Run the story.",null,"A hostile story spreads from the origin."],
+["c:Export as notes","Export","Export your map.",null,"Notes for the next meeting."]],
+faq:[["Is the analysis a finding?","No; a prompt."],["Is my map saved?","Yes, in this browser."]]}};
+(function(){Object.keys(DEEP).forEach(function(id){if(!TOUR[id])return;TOUR[id].steps=DEEP[id].steps;TOUR[id].faq=DEEP[id].faq})})();
+
 (function(){
 "use strict";
 var NS="http://www.w3.org/2000/svg";
@@ -3388,37 +3623,40 @@ var GUIDE_EL={};
  document.addEventListener("scroll",function(){tip.classList.remove("on")},{passive:true})})();
 
 /* ================= TOURS, LABELS, CHALLENGES, NOTES, FULL HOW-TO ================= */
-(function(){var DONE=store("fcr7-ch")||{},NOTES=store("fcr7-notes")||{};var cur=null;
+(function(){var DONE=store("fcr7-ch")||{},NOTES=store("fcr7-notes")||{};var cur=null,DEEPON=!!store("fcr7-deep"),DEMO=false,dT=0;
  function norm(t){return String(t||"").replace(/^[▶⚡↺✎⌖★]\s*/,"").trim().toLowerCase()}
  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
  function ctlIn(sec,lab){var l=norm(lab);return $$(".dtools .chip,.prpick .chip,.dtools button",sec).filter(function(b){return !b.closest(".illum,.tourbar,.guide")&&norm(b.textContent).indexOf(l)===0})[0]||null}
- function resolve(id,t){var svg=$("#"+id),sec=svg.closest("section");if(t.indexOf("p:")===0){var a=t.slice(2).split(",");return {svg:svg,pt:[+a[0],+a[1]]}}if(t.indexOf("c:")===0)return {el:ctlIn(sec,t.slice(2))};if(t==="panel")return {el:$(".panelx",sec)};if(t==="hist")return {el:$(".runhist",sec)};return {el:$(t)}}
+ function resolve(id,t){var svg=$("#"+id),sec=svg.closest("section");if(t.indexOf("p:")===0){var a=t.slice(2).split(",");return {svg:svg,pt:[+a[0],+a[1]]}}if(t.indexOf("c:")===0)return {el:ctlIn(sec,t.slice(2))};if(t==="panel")return {el:$(".panelx",sec)};if(t==="hist")return {el:$(".runhist",sec)||sec.querySelector('[id$="Hist"]')};return {el:$(t)}}
  function ptRect(svg,p){var m=svg.getScreenCTM();if(!m)return null;var q=svg.createSVGPoint();q.x=p[0];q.y=p[1];var r=q.matrixTransform(m);return {left:r.x-14,top:r.y-14,right:r.x+14,bottom:r.y+14,width:28,height:28}}
  /* ---- the tour ---- */
  var call=H("div",{class:"tcall",hidden:"",role:"dialog","aria-live":"polite"},null,document.body);var ring=null,hl=null,raf=0,waitOff=null;
  function clearHl(){if(ring){ring.remove();ring=null}if(hl){hl.classList.remove("tour-hl");hl=null}if(waitOff){waitOff();waitOff=null}}
  function place(){if(!cur)return;var st=TOUR[cur.id].steps[cur.k],r=resolve(cur.id,st[0]);var rect=r.pt?ptRect(r.svg,r.pt):r.el?r.el.getBoundingClientRect():null;
   if(innerWidth<700||!rect){call.style.left="8px";call.style.right="8px";call.style.top="auto";call.style.bottom="8px";call.classList.add("tdock");call.classList.remove("tup","tdown");return}
-  call.classList.remove("tdock");call.style.right="auto";call.style.bottom="auto";var w=Math.min(380,innerWidth-24);call.style.width=w+"px";var h=call.offsetHeight;var below=rect.bottom+14+h<innerHeight;var top=below?rect.bottom+12:Math.max(8,rect.top-h-12);var left=Math.max(12,Math.min(innerWidth-w-12,rect.left+rect.width/2-w/2));
-  call.style.top=top+"px";call.style.left=left+"px";call.classList.toggle("tdown",below);call.classList.toggle("tup",!below);call.style.setProperty("--ax",Math.max(16,Math.min(w-16,rect.left+rect.width/2-left))+"px")}
+  call.classList.remove("tdock");call.style.right="auto";call.style.bottom="auto";var w=Math.min(440,innerWidth-24);call.style.width=w+"px";var h=call.offsetHeight;var below=rect.bottom+14+h<innerHeight;var top=below?rect.bottom+12:Math.max(8,rect.top-h-12);var left=Math.max(12,Math.min(innerWidth-w-12,rect.left+rect.width/2-w/2));
+  top=Math.max(8,Math.min(top,innerHeight-h-8));call.style.top=top+"px";call.style.left=left+"px";call.classList.toggle("tdown",below);call.classList.toggle("tup",!below);call.style.setProperty("--ax",Math.max(16,Math.min(w-16,rect.left+rect.width/2-left))+"px")}
  function loop(){place();raf=requestAnimationFrame(loop)}
  function show(){clearHl();var T=TOUR[cur.id],st=T.steps[cur.k],r=resolve(cur.id,st[0]);var target=r.pt?r.svg.closest(".dgrid")||r.svg:r.el;
   if(r.pt){ring=S("g",{class:"tring",style:"pointer-events:none"},r.svg);S("circle",{cx:r.pt[0],cy:r.pt[1],r:18,fill:"none",stroke:"#D2AE63","stroke-width":3},ring);S("circle",{cx:r.pt[0],cy:r.pt[1],r:4,fill:"#D2AE63"},ring)}else if(r.el){hl=r.el;hl.classList.add("tour-hl")}
   if(target){var tr=target.getBoundingClientRect();if(tr.top<90||tr.bottom>innerHeight-40)scrollToEl(r.pt?r.svg:target)}
   var last=cur.k===T.steps.length-1,act=st[3]==="do"&&r.el;
-  call.innerHTML='<div class="tchead"><span class="tcn">'+(cur.k+1)+' / '+T.steps.length+'</span><b>'+esc(st[1])+'</b><button type="button" class="tcx" data-tx aria-label="End the tour">✕</button></div><p>'+st[2]+'</p>'+(act?'<p class="tcdo">Your turn: '+(r.el.tagName==="INPUT"?"move it":"press it")+'. The tour moves on when you do.</p>':'')+'<div class="tcbar"><button type="button" class="chip" data-tb'+(cur.k?"":" disabled")+'>◀ Back</button>'+(act&&r.el.tagName!=="INPUT"?'<button type="button" class="chip" data-tdo>Do it for me</button>':'')+'<button type="button" class="chip play" data-tn>'+(last?"Finish ✓":"Next ▶")+'</button></div>';
-  call.hidden=false;if(act){var ev=r.el.tagName==="INPUT"?"input":"click";var fn=function(){setTimeout(function(){if(cur&&TOUR[cur.id].steps[cur.k]===st)next()},r.el.tagName==="INPUT"?1200:900)};r.el.addEventListener(ev,fn,{once:true});waitOff=function(){r.el.removeEventListener(ev,fn)}}
+  var more=st[4];var dots=T.steps.map(function(x,i){return '<button type="button" class="tdot'+(i===cur.k?' on':'')+(i<cur.k?' past':'')+'" data-tj="'+i+'" title="'+esc(x[1])+'" aria-label="Step '+(i+1)+': '+esc(x[1])+'"></button>'}).join("");
+  call.innerHTML='<div class="tchead"><span class="tcn">'+(DEMO?'DEMO · ':'')+(cur.k+1)+' / '+T.steps.length+'</span><b>'+esc(st[1])+'</b><button type="button" class="tcx" data-tx aria-label="End the tour">✕</button></div><p>'+st[2]+'</p>'+(more?'<div class="tmore'+(DEEPON?' open':'')+'"><button type="button" class="tmb" data-tm>'+(DEEPON?'▾':'▸')+' Go deeper</button><p>'+more+'</p></div>':'')+(act&&!DEMO?'<p class="tcdo">Your turn: '+(r.el.tagName==="INPUT"?"move it":"press it")+'. The tour moves on when you do.</p>':'')+'<div class="tdots">'+dots+'</div><div class="tcbar"><button type="button" class="chip" data-tb'+(cur.k?"":" disabled")+'>◀ Back</button>'+(act&&!DEMO&&r.el.tagName!=="INPUT"?'<button type="button" class="chip" data-tdo>Do it for me</button>':'')+(DEMO?'<button type="button" class="chip" data-tpause>❚❚ Pause demo</button>':'')+'<button type="button" class="chip play" data-tn>'+(last?"Finish ✓":"Next ▶")+'</button></div><label class="tdeep"><input type="checkbox" data-tdeep'+(DEEPON?' checked':'')+'> Always show deeper notes</label>';
+  clearTimeout(dT);if(DEMO){if(act&&r.el.tagName!=="INPUT")dT=setTimeout(function(){if(cur&&TOUR[cur.id].steps[cur.k]===st)r.el.click()},1600);dT=setTimeout(function(){if(cur&&DEMO&&TOUR[cur.id].steps[cur.k]===st)next()},(more&&DEEPON?9000:6500)+(act?2500:0))}
+  call.hidden=false;if(act&&!DEMO){var ev=r.el.tagName==="INPUT"?"input":"click";var fn=function(){setTimeout(function(){if(cur&&TOUR[cur.id].steps[cur.k]===st)next()},r.el.tagName==="INPUT"?1200:900)};r.el.addEventListener(ev,fn,{once:true});waitOff=function(){r.el.removeEventListener(ev,fn)}}
   cancelAnimationFrame(raf);setTimeout(loop,reduce?0:350)}
  function next(){if(!cur)return;if(cur.k<TOUR[cur.id].steps.length-1){cur.k++;show()}else end()}
- function end(){clearHl();cancelAnimationFrame(raf);call.hidden=true;if(cur){var b=$('.tourbar[data-for="'+cur.id+'"] [data-tour]');if(b)b.setAttribute("aria-pressed","false")}cur=null}
- call.addEventListener("click",function(e){if(e.target.closest("[data-tx]"))end();else if(e.target.closest("[data-tn]"))next();else if(e.target.closest("[data-tb]")){cur.k=Math.max(0,cur.k-1);show()}else if(e.target.closest("[data-tdo]")){var st=TOUR[cur.id].steps[cur.k],r=resolve(cur.id,st[0]);if(r.el)r.el.click()}});
+ function end(){clearTimeout(dT);DEMO=false;clearHl();cancelAnimationFrame(raf);call.hidden=true;if(cur){var b=$('.tourbar[data-for="'+cur.id+'"] [data-tour]');if(b)b.setAttribute("aria-pressed","false")}cur=null}
+ call.addEventListener("change",function(e){if(e.target.matches("[data-tdeep]")){DEEPON=e.target.checked;store("fcr7-deep",DEEPON);show()}});
+ call.addEventListener("click",function(e){var j=e.target.closest("[data-tj]");if(j){DEMO=false;cur.k=+j.getAttribute("data-tj");show();return}if(e.target.closest("[data-tm]")){var m=e.target.closest(".tmore");m.classList.toggle("open");e.target.closest("[data-tm]").textContent=(m.classList.contains("open")?"▾":"▸")+" Go deeper";return}if(e.target.closest("[data-tpause]")){DEMO=false;clearTimeout(dT);show();return}if(e.target.closest("[data-tx]"))end();else if(e.target.closest("[data-tn]"))next();else if(e.target.closest("[data-tb]")){cur.k=Math.max(0,cur.k-1);show()}else if(e.target.closest("[data-tdo]")){var st=TOUR[cur.id].steps[cur.k],r=resolve(cur.id,st[0]);if(r.el)r.el.click()}});
  document.addEventListener("keydown",function(e){if(!cur)return;if(e.key==="Escape")end();else if(e.key==="ArrowRight"&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName))next();else if(e.key==="ArrowLeft"&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)&&cur.k){cur.k--;show()}});
- function start(id){end();cur={id:id,k:0};var b=$('.tourbar[data-for="'+id+'"] [data-tour]');if(b)b.setAttribute("aria-pressed","true");show()}
+ function start(id,demo){end();DEMO=!!demo;cur={id:id,k:0};var b=$('.tourbar[data-for="'+id+'"] [data-tour]');if(b)b.setAttribute("aria-pressed","true");show()}
  /* ---- per instrument ---- */
  Object.keys(TOUR).forEach(function(id){var svg=$("#"+id);if(!svg)return;var T=TOUR[id],sec=svg.closest("section"),grid=svg.closest(".dgrid");if(!grid)return;
   var bar=H("div",{class:"tourbar","data-for":id});var anchor=sec.querySelector(".illum")||grid;anchor.parentNode.insertBefore(bar,anchor);
-  var nCh=T.ch.length;bar.innerHTML='<span class="tbl">New here?</span><button type="button" class="chip play" data-tour aria-pressed="false">▶ Walk me through it · '+T.steps.length+' steps</button><button type="button" class="chip" data-lab aria-pressed="false">⌖ Label the diagram</button><button type="button" class="chip" data-ch aria-pressed="false">★ Challenges <b class="tchc">0/'+nCh+'</b></button><button type="button" class="chip" data-nt aria-pressed="false">✎ My notes</button>';
-  var chBox=H("div",{class:"tpanel tchal",hidden:""}),ntBox=H("div",{class:"tpanel tnotes",hidden:""});bar.parentNode.insertBefore(chBox,bar.nextSibling);bar.parentNode.insertBefore(ntBox,chBox.nextSibling);
+  var nCh=T.ch.length;bar.innerHTML='<span class="tbl">New here?</span><button type="button" class="chip play" data-tour aria-pressed="false">▶ Walk me through it · '+T.steps.length+' steps</button><button type="button" class="chip" data-demo>▶ Watch a demo</button><button type="button" class="chip" data-lab aria-pressed="false">⌖ Label the diagram</button><button type="button" class="chip" data-faq aria-pressed="false">? Common questions</button><button type="button" class="chip" data-ch aria-pressed="false">★ Challenges <b class="tchc">0/'+nCh+'</b></button><button type="button" class="chip" data-nt aria-pressed="false">✎ My notes</button>';
+  var chBox=H("div",{class:"tpanel tchal",hidden:""}),ntBox=H("div",{class:"tpanel tnotes",hidden:""});bar.parentNode.insertBefore(chBox,bar.nextSibling);bar.parentNode.insertBefore(ntBox,chBox.nextSibling);var fqBox=H("div",{class:"tpanel tfaq",hidden:""});bar.parentNode.insertBefore(fqBox,ntBox.nextSibling);fqBox.innerHTML='<span class="tkh">Common questions</span>'+(T.faq||[]).map(function(q){return '<details class="tq"><summary>'+esc(q[0])+'</summary><p>'+q[1]+'</p></details>'}).join("")+'<p class="tqm">Still stuck? Press <b>▶ Walk me through it</b>, or open <b>How to use this diagram</b> above.</p>';
   /* labels */
   var pins=null,key=null;function labels(on){if(pins){pins.remove();pins=null}if(key){key.remove();key=null}$("[data-lab]",bar).setAttribute("aria-pressed",on);if(!on)return;pins=S("g",{class:"tpins",style:"pointer-events:none"},svg);var n=0,items=[];
    T.steps.forEach(function(st){if(st[0].indexOf("p:")===0){n++;var a=st[0].slice(2).split(",");var g=S("g",null,pins);S("circle",{cx:+a[0],cy:+a[1],r:11,fill:"#D2AE63",stroke:"#0C1726","stroke-width":2},g);S("text",{x:+a[0],y:+a[1]+4,"text-anchor":"middle",fill:"#0C1726",style:"font:700 11px var(--mono)"},g).textContent=n;items.push('<li><span class="kn">'+n+'</span><span><b>'+esc(st[1])+'.</b> '+st[2]+'</span></li>')}else items.push('<li><span class="kn kc">⏵</span><span><b>'+esc(st[1])+'.</b> '+st[2]+'</span></li>')});
@@ -3432,7 +3670,7 @@ var GUIDE_EL={};
   ntBox.innerHTML='<span class="tkh">My notes on this instrument · kept in this browser</span><textarea rows="4" placeholder="What did you notice? What does it say about your own appointment?"></textarea><div class="tnb"><button type="button" class="chip" data-dl>Download all my notes</button><span class="tns"></span></div>';var ta=$("textarea",ntBox);ta.value=NOTES[id]||"";var st0=0;ta.addEventListener("input",function(){NOTES[id]=ta.value;clearTimeout(st0);st0=setTimeout(function(){store("fcr7-notes",NOTES);$(".tns",ntBox).textContent="Saved"},400)});
   $("[data-dl]",ntBox).addEventListener("click",function(){var md="# My notes on the instruments\n\nFrom Doing Fixed Charge Receiverships using a Complex Approach to Inside-Out Thinking\n\n"+Object.keys(TOUR).filter(function(k){return NOTES[k]&&NOTES[k].trim()}).map(function(k){return "## "+GUIDE[k].n+"\n\n"+NOTES[k].trim()+"\n"}).join("\n");saveFile("my-instrument-notes.md",md,"text/markdown")});
   function tog(box,btn){var o=box.hidden;box.hidden=!o;$(btn,bar).setAttribute("aria-pressed",o)}
-  bar.addEventListener("click",function(e){if(e.target.closest("[data-tour]")){cur&&cur.id===id?end():start(id)}else if(e.target.closest("[data-lab]"))labels(!pins);else if(e.target.closest("[data-ch]"))tog(chBox,"[data-ch]");else if(e.target.closest("[data-nt]"))tog(ntBox,"[data-nt]")});
+  bar.addEventListener("click",function(e){if(e.target.closest("[data-demo]")){start(id,true);return}if(e.target.closest("[data-faq]")){tog(fqBox,"[data-faq]");return}if(e.target.closest("[data-tour]")){cur&&cur.id===id?end():start(id)}else if(e.target.closest("[data-lab]"))labels(!pins);else if(e.target.closest("[data-ch]"))tog(chBox,"[data-ch]");else if(e.target.closest("[data-nt]"))tog(ntBox,"[data-nt]")});
   RESETS.push(function(){labels(false);if(cur&&cur.id===id)end()});
   /* fuller how-to inside the guide */
   var gd=GUIDE_EL[id],hw=T.how;if(gd&&hw){var more=H("div",{class:"gmore"},'<div class="gcol"><h4>Reading the diagram</h4><dl>'+hw.see.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join("")+'</dl><h4>The controls</h4><dl>'+hw.ctl.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join("")+'</dl></div><div class="gcol"><h4>Three ways to use it</h4><ol class="gdepth"><li><b>One minute.</b> '+hw.d[0]+'</li><li><b>Five minutes.</b> '+hw.d[1]+'</li><li><b>Fifteen minutes.</b> '+hw.d[2]+'</li></ol><h4>Common misreadings</h4><ul>'+hw.mis.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul><h4>Questions for your team</h4><ul>'+hw.team.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul><p><button type="button" class="chip play" data-gtour>▶ Walk me through it</button> <button type="button" class="chip" data-glab>⌖ Label the diagram</button></p></div>');$(".gbody",gd).appendChild(more);
