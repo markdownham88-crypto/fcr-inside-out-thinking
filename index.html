@@ -924,6 +924,12 @@ details.case[open]{border-color:var(--brass)}
 .tdeep{display:flex;gap:6px;align-items:center;margin-top:8px;font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
 .tfaq .tq{border-bottom:1px solid rgba(42,66,98,.5);padding:6px 0}.tfaq summary{cursor:pointer;color:var(--bone);font-size:15px}
 .tfaq .tq p{margin:6px 0 4px;font-size:14.5px;line-height:1.55}.tqm{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+
+/* touch: draggable parts of diagrams take the gesture; the rest of the page still scrolls */
+#figSvg g.hot,#wbSvg g.hot,#pxSvg g.hot,#pxSvg rect[style*="pointer"]{touch-action:none}
+.chip,.parbtn,.qopt,.tdot{touch-action:manipulation}
+
+svg.dsvg .hot.tapsel>*:first-child{stroke:#D2AE63!important;stroke-width:3!important}
 </style>
 </head>
 <body>
@@ -3031,6 +3037,13 @@ function scrollToEl(el){var hd=$("header.top");var top=el.getBoundingClientRect(
 function pulse(el){el.classList.remove("pulse");void el.offsetWidth;el.classList.add("pulse");setTimeout(function(){el.classList.remove("pulse")},2600)}
 
 
+/* robust drag for mouse, pen and touch (iPad): window-level tracking, tap vs drag, no page scroll while dragging */
+function dragOn(el,svg,o){el.style.touchAction="none";el.addEventListener("touchstart",function(e){e.preventDefault()},{passive:false});
+ el.addEventListener("pointerdown",function(ev){if(ev.button>0)return;ev.preventDefault();ev.stopPropagation();var p0=svgPt(svg,ev),moved=false;window.__fcrDrag=true;if(o.start)o.start(p0,ev);
+  function mv(e){var p=svgPt(svg,e);if(!moved&&Math.hypot(p.x-p0.x,p.y-p0.y)>4)moved=true;if(moved&&o.move)o.move(p,e);if(e.cancelable)e.preventDefault()}
+  function up(e){window.removeEventListener("pointermove",mv);window.removeEventListener("pointerup",up);window.removeEventListener("pointercancel",up);window.__fcrDrag=false;if(o.end)o.end(moved,e)}
+  window.addEventListener("pointermove",mv,{passive:false});window.addEventListener("pointerup",up);window.addEventListener("pointercancel",up)})}
+
 /* ================= INSTRUMENTS 7: inside-out ================= */
 function RNG(seed){var a=seed>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function P_(id){return PARTIES.filter(function(p){return p.id===id})[0]}
@@ -3087,9 +3100,9 @@ function sgnCol(v){return v>0?GREEN:v<0?C.signal:C.muted}
   var nb=H("button",{type:"button",class:"chip play"},st.k<PARLOUR.length-1?"Next turn →":"See the six weeks",panel);nb.addEventListener("click",function(){st.k++;if(st.k<PARLOUR.length)turn();else end()})}
  function end(){var tot=0,mx=null,mn=null;for(var id in st.s){tot+=st.s[id];if(!mx||st.s[id]>st.s[mx])mx=id;if(!mn||st.s[id]<st.s[mn])mn=id}HIST.add([st.ch.map(function(c){return c==="silent"?"S":c==="ask"?"A":"P"}).join(""),(tot>0?"+":"")+tot,P_(mx).n,P_(mn).n],Math.max(0,Math.min(1,.5+tot/24)));
   panel.innerHTML='<span class="caps">Six weeks in the parlour</span><h3>Net standing '+(tot>0?"+":"")+tot+'</h3><p class="q">You did not join the conversation at its start, and you will leave before its end.</p><dl><dt>Warmest</dt><dd>'+P_(mx).n+'</dd><dt>Coolest</dt><dd>'+P_(mn).n+'</dd><dt>Read it</dt><dd>Silence was never neutral; every choice took a side in someone’s argument. Asking usually did better than telling, and worse with those who had something to hide.</dd><dt>Try</dt><dd>Run the presets, then compare them in the history below.</dd></dl>'}
- function auto(k){reset();(function nx(){if(st.k>=PARLOUR.length){end();return}choose(typeof k==="function"?k(st.k):k);st.k++;if(st.k<PARLOUR.length)setTimeout(nx,reduce?0:250);else end()})()}
+ var parGen=0;function auto(k){reset();var g=parGen;(function nx(){if(g!==parGen)return;if(st.k>=PARLOUR.length){end();return}choose(typeof k==="function"?k(st.k):k);st.k++;if(st.k<PARLOUR.length)setTimeout(nx,reduce?0:250);else end()})()}
  var bar=$("#parTools");chip(bar,"Begin week 1",function(){reset();turn()},"play");chip(bar,"Preset: always speak",function(){auto("speak")});chip(bar,"Preset: always ask",function(){auto("ask")});chip(bar,"Preset: always silent",function(){auto("silent")});chip(bar,"Preset: ask, then speak",function(){auto(function(k){return k<3?"ask":"speak"})});chip(bar,"Preset: listen first",function(){auto(function(k){return k<2?"silent":"ask"})});
- function reset(){st={k:0,s:{},ch:[]};clear(mk);paintBars();panel.innerHTML='<span class="caps">Burke’s parlour</span><h3>You come late. Others have long preceded you.</h3><p class="q">Six weeks, six moments. At each you can speak, ask, or stay silent.</p><dl><dt>Read it</dt><dd>Grey lines are conversations that began before you arrived. Coloured dots are how your choices land. The bars below show your standing with each party.</dd><dt>Try</dt><dd>Begin week 1, or run a preset and compare.</dd></dl>'}
+ function reset(){parGen++;st={k:0,s:{},ch:[]};clear(mk);paintBars();panel.innerHTML='<span class="caps">Burke’s parlour</span><h3>You come late. Others have long preceded you.</h3><p class="q">Six weeks, six moments. At each you can speak, ask, or stay silent.</p><dl><dt>Read it</dt><dd>Grey lines are conversations that began before you arrived. Coloured dots are how your choices land. The bars below show your standing with each party.</dd><dt>Try</dt><dd>Begin week 1, or run a preset and compare.</dd></dl>'}
  addReset(bar,reset);reset()})();
 
 /* ---- 4 · one gesture, twelve responses ---- */
@@ -3116,7 +3129,9 @@ function sgnCol(v){return v>0?GREEN:v<0?C.signal:C.muted}
  var eg=S("g",null,svg),ng=S("g",null,svg);
  PARTIES.forEach(function(p){var x=p.b[0],y=p.b[1];var g=S("g",{class:"hot",role:"button",tabindex:"0","aria-label":p.n,style:"cursor:grab"},ng);var ring=S("circle",{r:26,fill:"none",stroke:C.bone,"stroke-width":2,opacity:0},g);var c=S("circle",{r:18,fill:C.node,stroke:PCOL[p.g],"stroke-width":2.5},g);txt(g,0,34,p.n,{"text-anchor":"middle",fill:C.text,style:"font-size:10.5px"});N[p.id]={p:p,x:x,y:y,vx:0,vy:0,g:g,c:c,ring:ring,fixed:false}});
  TIES.forEach(function(t){E.push({a:N[t[0]],b:N[t[1]],w:t[2],l:S("line",{stroke:C.line,"stroke-width":t[2]},eg)})});
- var drag=null;Object.keys(N).forEach(function(id){var n=N[id];n.g.addEventListener("pointerdown",function(ev){drag=n;n.fixed=true;n.g.setPointerCapture(ev.pointerId);ev.stopPropagation()});n.g.addEventListener("pointermove",function(ev){if(drag!==n)return;var p=svgPt(svg,ev);n.x=p.x;n.y=p.y;n.vx=n.vy=0;kick()});n.g.addEventListener("pointerup",function(){drag=null;n.fixed=false})});
+ var drag=null;Object.keys(N).forEach(function(id){var n=N[id];dragOn(n.g,svg,{start:function(){drag=n;n.fixed=true},move:function(p){n.x=Math.max(20,Math.min(740,p.x));n.y=Math.max(20,Math.min(460,p.y));n.vx=n.vy=0;paint();kick()},end:function(moved){drag=null;n.fixed=false;if(!moved)figInfo(n)}});key(n.g,function(){figInfo(n)})});
+ function figInfo(n){var p=n.p;Object.keys(N).forEach(function(k){N[k].ring.setAttribute("opacity",N[k]===n?1:0)});var deps=TIES.filter(function(t){return t[0]===p.id||t[1]===p.id}).map(function(t){var o=N[t[0]===p.id?t[1]:t[0]];return o?o.p.n+(t[2]>2?" (strong)":""):null}).filter(Boolean);
+  panel.innerHTML='<span class="caps">A party in the figuration</span><h3>'+p.n+'</h3><dl>'+(p.oi?'<dt style="color:'+C.brass+'">Outside-in sees</dt><dd>'+p.oi+'</dd>':'')+(p.io?'<dt style="color:'+GREEN+'">Inside-out sees</dt><dd>'+p.io+'</dd>':'')+'<dt>Tied to</dt><dd>'+(deps.join(", ")||"No direct ties drawn")+'</dd><dt>Try</dt><dd>Drag this party and watch who follows it; then pull a lever and see which way it moves.</dd></dl>'}
  var energy=1;function kick(){energy=1;if(!run&&vis){run=true;frame()}}
  function step(){var ids=Object.keys(N);ids.forEach(function(i){var a=N[i];ids.forEach(function(j){if(i===j)return;var b=N[j];var dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01,d=Math.sqrt(d2);var f=2200/d2;a.vx+=dx/d*f;a.vy+=dy/d*f})});
   E.forEach(function(e){var dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,d=Math.sqrt(dx*dx+dy*dy)+.01;var k=(d-120)*.004*e.w;e.a.vx+=dx/d*k;e.a.vy+=dy/d*k;e.b.vx-=dx/d*k;e.b.vy-=dy/d*k});
@@ -3126,13 +3141,13 @@ function sgnCol(v){return v>0?GREEN:v<0?C.signal:C.muted}
  for(var k=0;k<200;k++)step();paint();
  whenVisible(svg,function(){vis=true;kick()},function(){vis=false;run=false;cancelAnimationFrame(raf)});
  function dist(src){var d={},q=[src];d[src]=0;while(q.length){var x=q.shift();TIES.forEach(function(t){var y=t[0]===x?t[1]:t[1]===x?t[0]:null;if(y&&d[y]===undefined){d[y]=d[x]+1;q.push(y)}})}return d}
- function pull(k){var L=LEVERS[k];$$("[data-lv]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-lv")===k)});var d=dist("rc");Object.keys(N).forEach(function(id){var n=N[id];n.c.setAttribute("fill",C.node);n.ring.setAttribute("opacity",0)});
+ var figGen=0;function pull(k){var L=LEVERS[k];var gen=++figGen;$$("[data-lv]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-lv")===k)});var d=dist("rc");Object.keys(N).forEach(function(id){var n=N[id];n.c.setAttribute("fill",C.node);n.ring.setAttribute("opacity",0)});
   panel.innerHTML='<span class="caps">Lever pulled</span><h3>'+L.n+'</h3><p class="q">Intended: '+L.i+'</p><p class="small" style="color:var(--muted)">Watch it travel through the figuration…</p>';
-  Object.keys(N).forEach(function(id){var n=N[id],v=L.s[id]||0;setTimeout(function(){n.c.setAttribute("fill",v>0?"rgba(143,199,154,"+(.2+v*.2)+")":v<0?"rgba(232,135,90,"+(.2-v*.2)+")":C.node);n.ring.setAttribute("opacity",v?1:0);n.ring.setAttribute("stroke",sgnCol(v))},reduce?0:(d[id]||0)*450)});
-  setTimeout(function(){var pos=0,neg=0;for(var id in L.s){if(L.s[id]>0)pos+=L.s[id];else neg-=L.s[id]}panel.innerHTML='<span class="caps">Lever pulled</span><h3>'+L.n+'</h3><p class="q">Intended: '+L.i+'</p><dl><dt>What came back</dt><dd>'+L.u.join("<br>")+'</dd><dt>Net movement</dt><dd><span style="color:'+GREEN+'">+'+pos+'</span> · <span style="color:'+C.signal+'">−'+neg+'</span> across '+Object.keys(L.s).length+' parties</dd><dt>Elias</dt><dd>In a web of interdependence, the outcome is something nobody intended, including whoever pulled the lever.</dd></dl>'},reduce?0:2400)}
+  Object.keys(N).forEach(function(id){var n=N[id],v=L.s[id]||0;setTimeout(function(){if(gen!==figGen)return;n.c.setAttribute("fill",v>0?"rgba(143,199,154,"+(.2+v*.2)+")":v<0?"rgba(232,135,90,"+(.2-v*.2)+")":C.node);n.ring.setAttribute("opacity",v?1:0);n.ring.setAttribute("stroke",sgnCol(v))},reduce?0:(d[id]||0)*450)});
+  setTimeout(function(){if(gen!==figGen)return;var pos=0,neg=0;for(var id in L.s){if(L.s[id]>0)pos+=L.s[id];else neg-=L.s[id]}panel.innerHTML='<span class="caps">Lever pulled</span><h3>'+L.n+'</h3><p class="q">Intended: '+L.i+'</p><dl><dt>What came back</dt><dd>'+L.u.join("<br>")+'</dd><dt>Net movement</dt><dd><span style="color:'+GREEN+'">+'+pos+'</span> · <span style="color:'+C.signal+'">−'+neg+'</span> across '+Object.keys(L.s).length+' parties</dd><dt>Elias</dt><dd>In a web of interdependence, the outcome is something nobody intended, including whoever pulled the lever.</dd></dl>'},reduce?0:2400)}
  function compare(){panel.innerHTML='<span class="caps">Four levers · one figuration</span><h3>Compared</h3><div class="ctbars">'+Object.keys(LEVERS).map(function(k){var L=LEVERS[k],p=0,n=0;for(var id in L.s){if(L.s[id]>0)p+=L.s[id];else n-=L.s[id]}return '<div class="ctbar"><span>'+L.n+'</span><i style="width:'+Math.round(p/12*100)+'%;background:'+GREEN+'"></i><b>+'+p+' / −'+n+'</b></div>'}).join("")+'</div><dl><dt>Read it</dt><dd>The lever expected to do least, listening, moves most people in the right direction. The levers with the biggest intended effects produce the biggest unintended ones.</dd></dl>'}
  var bar=$("#figTools");Object.keys(LEVERS).forEach(function(k){var b=chip(bar,LEVERS[k].n,function(){pull(k)});b.setAttribute("data-lv",k)});chip(bar,"Compare all four",compare,"play");chip(bar,"Shake the figuration",function(){Object.keys(N).forEach(function(id){N[id].vx+=(r()-.5)*40;N[id].vy+=(r()-.5)*40});kick()});
- function reset(){$$("[data-lv]").forEach(function(b){b.setAttribute("aria-pressed","false")});Object.keys(N).forEach(function(id){var n=N[id];n.x=n.p.b[0];n.y=n.p.b[1];n.c.setAttribute("fill",C.node);n.ring.setAttribute("opacity",0)});for(var k=0;k<200;k++)step();paint();kick();panel.innerHTML='<span class="caps">A figuration, not a machine</span><h3>Pull a lever</h3><p class="q">Eleven interdependent parties, tied by how much each depends on the others.</p><dl><dt>Try</dt><dd>Pull each lever and read what comes back. Drag the receiver and watch the others move: forming, and being formed.</dd></dl>'}
+ function reset(){figGen++;$$("[data-lv]").forEach(function(b){b.setAttribute("aria-pressed","false")});Object.keys(N).forEach(function(id){var n=N[id];n.x=n.p.b[0];n.y=n.p.b[1];n.c.setAttribute("fill",C.node);n.ring.setAttribute("opacity",0)});for(var k=0;k<200;k++)step();paint();kick();panel.innerHTML='<span class="caps">A figuration, not a machine</span><h3>Pull a lever</h3><p class="q">Eleven interdependent parties, tied by how much each depends on the others.</p><dl><dt>Try</dt><dd>Pull each lever and read what comes back. Drag the receiver and watch the others move: forming, and being formed.</dd></dl>'}
  addReset(bar,reset);reset()})();
 
 /* ---- 6 · what is this a case of? ---- */
@@ -3451,6 +3466,7 @@ var GCOL={l:PURPLE,e:"#E8875A",o:"#7FB3E0",r:"#D2AE63"};
  function analyse(){var A=adj(),B=betw();var deg=A.map(function(a){return a.length});var G={};P.forEach(function(p,i){(G[p.g]=G[p.g]||[]).push(i)});var res={deg:deg,B:B,hub:{},dens:{},broker:null};
   Object.keys(G).forEach(function(g){var m=G[g];var hub=m.slice().sort(function(a,b){return deg[b]-deg[a]})[0];res.hub[g]=hub;var e=T.filter(function(t){return P[t[0]].g===g&&P[t[1]].g===g}).length;res.dens[g]=m.length>1?e/(m.length*(m.length-1)/2):0});
   var cand=P.map(function(p,i){return i}).filter(function(i){return P[i].g!=="r"}).sort(function(a,b){return B[b]-B[a]});res.broker=cand.length&&B[cand[0]]>0?cand[0]:null;res.iso=P.map(function(p,i){return i}).filter(function(i){return deg[i]===0});return res}
+ function light(){var gs=ng.children,ls=tg.children;P.forEach(function(p,i){if(gs[i])gs[i].setAttribute("transform","translate("+p.x+","+p.y+")")});T.forEach(function(e,k){var l=ls[k];if(!l)return;l.setAttribute("x1",P[e[0]].x);l.setAttribute("y1",P[e[0]].y);l.setAttribute("x2",P[e[1]].x);l.setAttribute("y2",P[e[1]].y)})}
  function draw(){clear(tg);clear(ng);empty.style.display=P.length?"none":"";var R=P.length?analyse():null;
   T.forEach(function(t){var a=P[t[0]],b=P[t[1]];var col=story?colMix((story[t[0]]+story[t[1]])/2):C.line;S("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:col,"stroke-width":2,"stroke-opacity":.8},tg)});
   P.forEach(function(p,i){var g=S("g",{class:"hot",tabindex:"0",role:"button","aria-label":p.n,style:"cursor:grab",transform:"translate("+p.x+","+p.y+")"},ng);var r=12+Math.min(10,R.deg[i]*2);
@@ -3458,11 +3474,11 @@ var GCOL={l:PURPLE,e:"#E8875A",o:"#7FB3E0",r:"#D2AE63"};
    S("circle",{r:r,fill:story?colMix(story[i]):C.node,stroke:sel===i?C.bone:GCOL[p.g],"stroke-width":sel===i?4:2.5},g);
    if(R.broker===i){S("rect",{x:r-2,y:-r-12,width:52,height:14,rx:3,fill:C.brass},g);mono(g,r+24,-r-2,"BROKER",{"text-anchor":"middle",fill:"#0C1726",style:"font-size:8.5px"})}
    txt(g,0,r+15,p.n,{"text-anchor":"middle",fill:C.text,style:"font-size:11px"});
-   g.addEventListener("pointerdown",function(ev){down(ev,i)});g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();clickNode(i)}})});
+   dragOn(g,svg,{start:function(p){drag={i:i,ox:p.x-P[i].x,oy:p.y-P[i].y}},move:function(p){if(!drag)return;P[drag.i].x=clamp(p.x-drag.ox,30,730);P[drag.i].y=clamp(p.y-drag.oy,36,430);light()},end:function(moved){var d=drag;drag=null;if(d&&!moved)clickNode(d.i);else if(d)draw()}});g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();clickNode(i)}})});
   report(R);save()}
  var drag=null;function down(ev,i){ev.preventDefault();var p=svgPt(svg,ev);drag={i:i,ox:p.x-P[i].x,oy:p.y-P[i].y,sx:p.x,sy:p.y,moved:false};svg.setPointerCapture&&svg.setPointerCapture(ev.pointerId)}
- svg.addEventListener("pointermove",function(ev){if(!drag)return;var p=svgPt(svg,ev);if(Math.hypot(p.x-drag.sx,p.y-drag.sy)>4)drag.moved=true;if(drag.moved){P[drag.i].x=clamp(p.x-drag.ox,30,730);P[drag.i].y=clamp(p.y-drag.oy,36,430);draw()}});
- svg.addEventListener("pointerup",function(){if(!drag)return;var d=drag;drag=null;if(!d.moved)clickNode(d.i)});
+ 
+ 
  function clickNode(i){if(sel===null){sel=i}else if(sel===i){sel=null}else{var k=T.findIndex(function(t){return (t[0]===sel&&t[1]===i)||(t[0]===i&&t[1]===sel)});if(k>=0)T.splice(k,1);else T.push([sel,i]);sel=null}story=null;draw()}
  var GN={r:"Receiver",l:"Lender side",e:"Established",o:"Outsiders"};
  function report(R){if(!P.length){panel.innerHTML='<span class="caps">Your own appointment</span><h3>Start from what is happening between people</h3><p class="q">Add the parties on your current appointment, then tie together those who talk to each other.</p><dl><dt>Groups</dt><dd><b style="color:'+GCOL.e+'">Established</b>: long-standing, tightly knit. <b style="color:'+GCOL.o+'">Outsiders</b>: newer, loosely tied. <b style="color:'+GCOL.l+'">Lender side</b>. <b style="color:'+GCOL.r+'">Receiver</b>.</dd><dt>What it finds</dt><dd>The hub of each group (dashed ring), the broker who sits between groups, how cohesive each group is, and who nobody talks to.</dd></dl>';return}
@@ -3497,7 +3513,7 @@ var GCOL={l:PURPLE,e:"#E8875A",o:"#7FB3E0",r:"#D2AE63"};
   S("rect",{x:X0,y:y+12,width:W*.2,height:12,fill:"rgba(232,135,90,.18)"},svg);S("rect",{x:X0+W*.8,y:y+12,width:W*.2,height:12,fill:"rgba(232,135,90,.18)"},svg);S("rect",{x:X0+W*.35,y:y+12,width:W*.3,height:12,fill:"rgba(143,199,154,.16)"},svg);S("rect",{x:X0,y:y+12,width:W,height:12,fill:"none",stroke:C.line},svg);
   var tr=S("rect",{x:X0,y:y+4,width:W,height:28,fill:"transparent",style:"cursor:pointer"},svg);var h=S("g",{id:"px"+i,class:"hot",tabindex:"0",role:"slider","aria-label":p[0],"aria-valuemin":"0","aria-valuemax":"100",style:"cursor:grab"},svg);S("circle",{r:10,fill:C.bone,stroke:"#0C1726","stroke-width":2},h);
   function setFrom(ev){var q=svgPt(svg,ev);V[i]=clamp(Math.round((q.x-X0)/W*100),0,100);last=i;paint()}var dr=false;
-  [tr,h].forEach(function(el){el.addEventListener("pointerdown",function(ev){ev.preventDefault();dr=true;setFrom(ev);svg.setPointerCapture&&svg.setPointerCapture(ev.pointerId)})});svg.addEventListener("pointermove",function(ev){if(dr)setFrom(ev)});svg.addEventListener("pointerup",function(){dr=false});
+  [tr,h].forEach(function(el){dragOn(el,svg,{start:function(p,ev){setFrom(ev)},move:function(p,ev){setFrom(ev)}})});svg.addEventListener("pointermove",function(ev){if(dr)setFrom(ev)});svg.addEventListener("pointerup",function(){dr=false});svg.addEventListener("pointercancel",function(){dr=false});
   h.addEventListener("keydown",function(ev){if(ev.key==="ArrowLeft"||ev.key==="ArrowRight"){ev.preventDefault();V[i]=clamp(V[i]+(ev.key==="ArrowLeft"?-5:5),0,100);last=i;paint()}});H_.push({h:h,y:y})});
  function state(i){var v=V[i];return v<20?"l":v>80?"r":v>=35&&v<=65?"h":"m"}
  function paint(){poly.setAttribute("points",A.map(function(a,i){var e=Math.abs(V[i]-50)/50;var r=RR*(.12+.88*e);return (CX+Math.cos(a)*r)+","+(CY+Math.sin(a)*r)}).join(" "));H_.forEach(function(o,i){o.h.setAttribute("transform","translate("+(X0+W*V[i]/100)+","+(o.y+18)+")");o.h.setAttribute("aria-valuenow",V[i]);o.h.querySelector("circle").setAttribute("fill",{l:C.signal,r:C.signal,h:GREEN,m:C.bone}[state(i)])});
@@ -3534,7 +3550,7 @@ var GCOL={l:PURPLE,e:"#E8875A",o:"#7FB3E0",r:"#D2AE63"};
   var box=H("div",{class:"illum",hidden:"","aria-live":"polite"});grid.parentNode.insertBefore(box,grid);
   var trail=[],obs=null,tmo=null,pending=null,bypass=false;
   function chipBy(t){return $$(".dtools .chip",sec).filter(function(b){return norm(b.textContent)===t})[0]}
-  function result(){var p=sec.querySelector(".panelx");if(!p)return "";var h=p.querySelector("h3"),q=p.querySelector(".q");var qs=q?q.textContent.trim().split(/(?<=[.!?])\s/)[0]:"";return (h?h.textContent.trim():"")+(qs?" — "+qs:"")}
+  function result(){var p=sec.querySelector(".panelx");if(!p)return "";var h=p.querySelector("h3"),q=p.querySelector(".q");var qt=q?q.textContent.trim():"",qm=qt.match(/^[\s\S]*?[.!?](?=\s|$)/),qs=qm?qm[0]:qt;return (h?h.textContent.trim():"")+(qs?" — "+qs:"")}
   function drawTrail(){var tb=box.querySelector(".itrail");if(!tb)return;tb.innerHTML=trail.length>1?'<span class="ik">Your comparison so far</span><table><tr><th>You ran</th><th>What came out</th></tr>'+trail.map(function(r,i){return '<tr'+(i===trail.length-1?' class="now"':'')+'><td>'+esc(r.n)+'</td><td>'+esc(r.res||"…")+'</td></tr>'}).join("")+'</table><button type="button" class="chip" data-iclr>Clear the comparison</button>':'<span class="ik">Your comparison so far</span><p class="inote">Run a second choice and the results will line up here, side by side.</p>'}
   function watch(){if(obs)obs.disconnect();clearTimeout(tmo);var p=sec.querySelector(".panelx");if(!p)return;var row=trail[trail.length-1];function up(){row.res=result();drawTrail()}setTimeout(up,60);obs=new MutationObserver(up);obs.observe(p,{childList:true,subtree:true,characterData:true});tmo=setTimeout(function(){obs.disconnect()},40000)}
   function show(t,e,pr){$$(".dtools .chip.lit",sec).forEach(function(x){x.classList.remove("lit")});var b=chipBy(t);if(b)b.classList.add("lit");
@@ -3568,7 +3584,7 @@ var GCOL={l:PURPLE,e:"#E8875A",o:"#7FB3E0",r:"#D2AE63"};
 /* ---- every diagram: zoom, pan and keyboard ---- */
 (function(){$$("svg.dsvg").forEach(function(svg){var vb0=(svg.getAttribute("viewBox")||"0 0 760 480").split(/\s+/).map(Number);var z=1,cx=vb0[0]+vb0[2]/2,cy=vb0[1]+vb0[3]/2;
   function apply(){var w=vb0[2]/z,h=vb0[3]/z;cx=Math.max(vb0[0]+w/2,Math.min(vb0[0]+vb0[2]-w/2,cx));cy=Math.max(vb0[1]+h/2,Math.min(vb0[1]+vb0[3]-h/2,cy));svg.setAttribute("viewBox",(cx-w/2).toFixed(1)+" "+(cy-h/2).toFixed(1)+" "+w.toFixed(1)+" "+h.toFixed(1));svg.classList.toggle("zoomed",z>1);zl.textContent=Math.round(z*100)+"%"}
-  function zoom(f,px,py){var nz=Math.max(1,Math.min(4,z*f));if(px!=null){var w=vb0[2]/z,h=vb0[3]/z;var fx=(px-(cx-w/2))/w,fy=(py-(cy-h/2))/h;var nw=vb0[2]/nz,nh=vb0[3]/nz;cx=px-(fx-.5)*nw;cy=py-(fy-.5)*nh}z=nz;apply()}
+  function zoom(f,px,py){var nz=Math.max(1,Math.min(4,z*f));svg.style.touchAction=nz>1?"none":"";if(px!=null){var w=vb0[2]/z,h=vb0[3]/z;var fx=(px-(cx-w/2))/w,fy=(py-(cy-h/2))/h;var nw=vb0[2]/nz,nh=vb0[3]/nz;cx=px-(fx-.5)*nw;cy=py-(fy-.5)*nh}z=nz;apply()}
   var grid=svg.closest(".dgrid"),many=grid&&$$("svg.dsvg",grid).length>1;var bar=toolbar(grid&&!many?grid:svg);var box=H("span",{class:"zoomset"},null,bar);
   chip(box,"−",function(){zoom(1/1.4)}).title="Zoom out";var zl=H("span",{class:"zl"},"100%",box);chip(box,"+",function(){zoom(1.4)}).title="Zoom in";chip(box,"Fit",function(){z=1;cx=vb0[0]+vb0[2]/2;cy=vb0[1]+vb0[3]/2;apply()}).title="Show the whole diagram";
   var kb=H("span",{class:"kbhint",title:"With the pointer over this diagram: Space play or pause · ← → step · R reset · + − zoom · 0 fit · Ctrl/⌘ + wheel zooms · drag empty space to pan when zoomed"},"⌨ keys",box);
@@ -3676,6 +3692,24 @@ var GUIDE_EL={};
   var gd=GUIDE_EL[id],hw=T.how;if(gd&&hw){var more=H("div",{class:"gmore"},'<div class="gcol"><h4>Reading the diagram</h4><dl>'+hw.see.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join("")+'</dl><h4>The controls</h4><dl>'+hw.ctl.map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join("")+'</dl></div><div class="gcol"><h4>Three ways to use it</h4><ol class="gdepth"><li><b>One minute.</b> '+hw.d[0]+'</li><li><b>Five minutes.</b> '+hw.d[1]+'</li><li><b>Fifteen minutes.</b> '+hw.d[2]+'</li></ol><h4>Common misreadings</h4><ul>'+hw.mis.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul><h4>Questions for your team</h4><ul>'+hw.team.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul><p><button type="button" class="chip play" data-gtour>▶ Walk me through it</button> <button type="button" class="chip" data-glab>⌖ Label the diagram</button></p></div>');$(".gbody",gd).appendChild(more);
    more.addEventListener("click",function(e){if(e.target.closest("[data-gtour]"))start(id);if(e.target.closest("[data-glab]"))labels(true)})}});
 })();
+
+/* ================= iPad / touch: let draggable parts drag instead of scrolling the page ================= */
+(function(){var SEL="#figSvg g.hot, #figSvg g[style*='grab'], #wbSvg g.hot, #pxSvg g.hot, #pxSvg rect[style*='pointer']";var active=false;
+ function hit(t){return t&&t.closest&&t.closest(SEL)}
+ document.addEventListener("touchstart",function(e){if(hit(e.target))active=true},{passive:true,capture:true});
+ document.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse"&&hit(e.target))active=true},true);
+ ["pointerup","pointercancel","touchend","touchcancel"].forEach(function(t){document.addEventListener(t,function(){active=false},true)});
+ document.addEventListener("touchmove",function(e){if(window.__fcrDrag||active||(e.target.closest&&e.target.closest("svg.dsvg")&&e.target.closest("svg.dsvg").style.touchAction==="none"))e.preventDefault()},{passive:false});
+})();
+
+/* ================= safety net: every tappable diagram element explains itself ================= */
+(function(){$$("svg.dsvg").forEach(function(svg){var grid=svg.closest(".dgrid");var pan=grid&&grid.querySelector(".panelx");if(!pan)return;
+  function explain(h){var lab=h.getAttribute("aria-label")||"";if(!lab)return;var i=lab.indexOf(": "),head=i>0?lab.slice(0,i):lab,rest=i>0?lab.slice(i+2):"";var name=(typeof GUIDE!=="undefined"&&GUIDE[svg.id])?GUIDE[svg.id].n:"This diagram";
+   $$(".hot.tapsel",svg).forEach(function(x){x.classList.remove("tapsel")});h.classList.add("tapsel");
+   pan.innerHTML='<span class="caps">'+name+' · you tapped</span><h3>'+head+'</h3>'+(rest?'<p class="q">'+rest+'</p>':'')+'<dl><dt>What this is</dt><dd>One element of the diagram. Its position and colour carry the meaning: read it against the elements around it.</dd><dt>Next</dt><dd>Use the controls above the diagram, or press <b>▶ Walk me through it</b> for a guided tour of every part.</dd></dl>'}
+  function snap(){return pan.innerHTML.length+"|"+pan.textContent.slice(0,200)+"|"+svg.innerHTML.length}
+  function watch(e){if(e.type==="keydown"&&e.key!=="Enter"&&e.key!==" ")return;var h=e.target.closest&&e.target.closest(".hot,[role=button]");if(!h||!svg.contains(h)||h===svg)return;var s0=snap();setTimeout(function(){if(snap()===s0)explain(h)},220)}
+  svg.addEventListener("click",watch,true);svg.addEventListener("keydown",watch,true)})})();
 
 /* ================= ATLAS ================= */
 (function(){var g=$("#atlasGrid");if(!g)return;var q=$("#atlasQ"),dk=$("#atlasDeck");H("option",{value:""},"All decks ("+CARDS.length+")",dk);Object.keys(DECKS).forEach(function(k){H("option",{value:k},DECKS[k]+" ("+CARDS.filter(function(c){return c.d===k}).length+")",dk)});
